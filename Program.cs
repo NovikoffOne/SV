@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace SV
 {
@@ -6,7 +7,7 @@ namespace SV
     {
         static void Main(string[] args)
         {
-            string userInput = "((((()))))";
+            string userInput;
 
             char openingBracket = '(';
             char closeBracket = ')';
@@ -21,6 +22,19 @@ namespace SV
             while (stringCorrect == true)
             {
                 int templateDepth = 0;
+
+                Console.WriteLine("Введите выражение :");
+                userInput = Console.ReadLine();
+
+                for (int i = 0; i < userInput.Length; i++)
+                {
+                    if (userInput[i] != closeBracket && userInput[i] != openingBracket)
+                    {
+                        Console.WriteLine("Некоректная строка, попробуйте еще раз...");
+                        Console.ReadKey();
+                        return;
+                    }
+                }
 
                 if (userInput[0] == closeBracket)
                     stringCorrect = false;
