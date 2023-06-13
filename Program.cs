@@ -12,9 +12,6 @@ namespace SV
             char openingBracket = '(';
             char closeBracket = ')';
 
-            int closeBracketCount = 0;
-            int openingBracketCount = 0;
-
             bool stringCorrect = true;
 
             int maximumDepth = 0;
@@ -36,30 +33,22 @@ namespace SV
                     }
                 }
 
-                if (userInput[0] == closeBracket)
-                    stringCorrect = false;
-
-                if (userInput[userInput.Length - 1] == openingBracket)
-                    stringCorrect = false;
-
                 for (int i = 0; i < userInput.Length; i++)
                 {
                     Console.WriteLine(userInput[i]);
 
                     if (userInput[i] == openingBracket)
                     {
-                        templateDepth++;
-                        openingBracketCount++;
+                        ++templateDepth;
 
                         if (templateDepth > maximumDepth)
                         {
                             maximumDepth = templateDepth;
                         }
                     }
-                    else if (userInput[i] == closeBracket && closeBracketCount < openingBracketCount && templateDepth > 0)
+                    else if (userInput[i] == closeBracket && templateDepth > 0)
                     {
-                        templateDepth--;
-                        closeBracketCount++;
+                        --templateDepth;
                     }
                     else
                     {
@@ -67,7 +56,7 @@ namespace SV
                     }
                 }
 
-                if (stringCorrect == true && closeBracketCount == openingBracketCount && templateDepth == 0)
+                if (stringCorrect == true && templateDepth == 0)
                 {
                     Console.WriteLine($"{userInput} - строка корректна \n" +
                                       $"{maximumDepth} - максимальная глубина");
@@ -78,6 +67,8 @@ namespace SV
                     Console.WriteLine("Строка не корректна, попробуйте в следующий раз");
                     Console.ReadKey();
                 }
+
+                maximumDepth = 0;
             }
         }
     }
